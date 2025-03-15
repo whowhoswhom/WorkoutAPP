@@ -1,0 +1,24 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    @apply transition-colors duration-200;
+  }
+}
+
+/* Light theme (default) */
+.light {
+  @apply bg-gray-50 text-gray-900;
+}
+
+/* Dark theme */
+.dark {
+  @apply bg-gray-900 text-white;
+}
+
+/* Theme transitions */
+.transition-theme {
+  @apply transition-all duration-200;
+} 
