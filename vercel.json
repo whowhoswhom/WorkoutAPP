@@ -1,0 +1,13 @@
+{
+  "version": 2,
+  "builds": [
+    {
+      "src": "package.json",
+      "use": "@vercel/next"
+    }
+  ],
+  "env": {
+    "NEXTAUTH_URL": "WILL_BE_SET_BY_VERCEL",
+    "NEXTAUTH_SECRET": "WILL_BE_SET_IN_VERCEL_DASHBOARD"
+  }
+} 

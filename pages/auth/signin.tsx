@@ -3,7 +3,7 @@ import { signIn } from 'next-auth/react'
 import { useRouter } from 'next/router'
 import Layout from '../../components/Layout'
 import { useTheme } from '../../contexts/ThemeContext'
-import { FaGoogle, FaGithub, FaMicrosoft } from 'react-icons/fa'
+import { FaGoogle } from 'react-icons/fa'
 
 export default function SignIn() {
   const router = useRouter()
@@ -33,9 +33,23 @@ export default function SignIn() {
 
   const handleOAuthSignIn = async (provider: string) => {
     try {
-      await signIn(provider, { callbackUrl: '/dashboard' })
+      console.log(`Attempting to sign in with ${provider}`)
+      const result = await signIn(provider, {
+        callbackUrl: '/dashboard',
+        redirect: false
+      })
+      console.log('Sign-in result:', result)
+      
+      if (result?.error) {
+        console.error(`${provider} sign in error:`, result.error)
+        setError(`${provider} sign in failed: ${result.error}`)
+      } else if (result?.url) {
+        console.log('Redirecting to:', result.url)
+        router.push(result.url)
+      }
     } catch (error) {
-      setError('An error occurred during OAuth sign in')
+      console.error('OAuth sign in error:', error)
+      setError(`An error occurred during ${provider} sign in: ${error}`)
     }
   }
 
@@ -75,29 +89,13 @@ export default function SignIn() {
           </div>
 
           <div className="mt-6">
-            <div className="grid grid-cols-3 gap-3">
+            <div className="flex justify-center">
               <button
                 onClick={() => handleOAuthSignIn('google')}
                 className={getThemeClasses.oauth}
               >
                 <FaGoogle className="w-5 h-5 text-red-500" />
-                <span>Google</span>
-              </button>
-
-              <button
-                onClick={() => handleOAuthSignIn('github')}
-                className={getThemeClasses.oauth}
-              >
-                <FaGithub className="w-5 h-5" />
-                <span>GitHub</span>
-              </button>
-
-              <button
-                onClick={() => handleOAuthSignIn('azure-ad')}
-                className={getThemeClasses.oauth}
-              >
-                <FaMicrosoft className="w-5 h-5 text-blue-500" />
-                <span>Microsoft</span>
+                <span>Sign in with Google</span>
               </button>
             </div>
 

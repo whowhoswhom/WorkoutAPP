@@ -1,8 +1,6 @@
 import NextAuth, { NextAuthOptions, User } from 'next-auth'
 import CredentialsProvider from 'next-auth/providers/credentials'
 import GoogleProvider from 'next-auth/providers/google'
-import GitHubProvider from 'next-auth/providers/github'
-import MicrosoftProvider from 'next-auth/providers/azure-ad'
 import { supabase } from '../../../lib/supabase'
 
 // Extend the built-in session types
@@ -84,15 +82,6 @@ export const authOptions: NextAuthOptions = {
         }
       }
     }),
-    GitHubProvider({
-      clientId: process.env.GITHUB_ID!,
-      clientSecret: process.env.GITHUB_SECRET!,
-    }),
-    MicrosoftProvider({
-      clientId: process.env.MICROSOFT_CLIENT_ID!,
-      clientSecret: process.env.MICROSOFT_CLIENT_SECRET!,
-      tenantId: process.env.MICROSOFT_TENANT_ID,
-    }),
   ],
   pages: {
     signIn: '/auth/signin',
@@ -101,8 +90,16 @@ export const authOptions: NextAuthOptions = {
     verifyRequest: '/auth/verify-request',
   },
   callbacks: {
-    async signIn({ user, account, profile }) {
-      if (account?.provider === 'google' || account?.provider === 'github' || account?.provider === 'azure-ad') {
+    async signIn({ user, account, profile, email, credentials }) {
+      console.log('Sign in callback:', { 
+        user, 
+        accountProvider: account?.provider,
+        profileEmail: profile?.email,
+        callbackUrl: account?.callbackUrl,
+        baseUrl: process.env.NEXTAUTH_URL
+      })
+      
+      if (account?.provider === 'google') {
         try {
           const { data: existingUser, error: lookupError } = await supabase
             .from('users')
@@ -131,11 +128,19 @@ export const authOptions: NextAuthOptions = {
             }
           }
         } catch (error) {
-          console.error('SignIn error:', error)
+          console.error('SignIn error details:', error)
           return false
         }
       }
       return true
+    },
+    async redirect({ url, baseUrl }) {
+      console.log('Redirect callback:', { url, baseUrl })
+      // Allows relative callback URLs
+      if (url.startsWith("/")) return `${baseUrl}${url}`
+      // Allows callback URLs on the same origin
+      else if (new URL(url).origin === baseUrl) return url
+      return baseUrl
     },
     async jwt({ token, user, account }) {
       if (account && user) {
@@ -158,7 +163,7 @@ export const authOptions: NextAuthOptions = {
     strategy: 'jwt',
     maxAge: 30 * 24 * 60 * 60, // 30 days
   },
-  debug: process.env.NODE_ENV === 'development',
+  debug: true,
   secret: process.env.NEXTAUTH_SECRET,
 }
 
