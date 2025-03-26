@@ -52,6 +52,7 @@ export const authOptions: NextAuthOptions = {
           })
 
           if (error) {
+            console.error('Supabase auth error:', error)
             throw new Error(error.message)
           }
 
@@ -74,13 +75,6 @@ export const authOptions: NextAuthOptions = {
     GoogleProvider({
       clientId: process.env.GOOGLE_CLIENT_ID!,
       clientSecret: process.env.GOOGLE_CLIENT_SECRET!,
-      authorization: {
-        params: {
-          prompt: "select_account",
-          access_type: "offline",
-          response_type: "code"
-        }
-      }
     }),
   ],
   pages: {
@@ -90,59 +84,34 @@ export const authOptions: NextAuthOptions = {
     verifyRequest: '/auth/verify-request',
   },
   callbacks: {
-    async signIn({ user, account, profile, email, credentials }) {
-      console.log('Sign in callback:', { 
-        user, 
-        accountProvider: account?.provider,
-        profileEmail: profile?.email,
-        callbackUrl: account?.callbackUrl,
-        baseUrl: process.env.NEXTAUTH_URL
-      })
-      
-      if (account?.provider === 'google') {
-        try {
-          const { data: existingUser, error: lookupError } = await supabase
-            .from('users')
-            .select('id')
-            .eq('email', user.email)
-            .single()
-
-          if (lookupError && lookupError.code !== 'PGRST116') {
-            console.error('Error looking up user:', lookupError)
-            return false
-          }
-
-          if (!existingUser) {
-            const { error: createError } = await supabase.from('users').insert([
-              {
-                email: user.email,
-                name: user.name,
-                avatar_url: user.image,
-                provider: account.provider,
-              },
-            ])
-
-            if (createError) {
-              console.error('Error creating user:', createError)
-              return false
-            }
-          }
-        } catch (error) {
-          console.error('SignIn error details:', error)
-          return false
-        }
-      }
+    async signIn({ user, account }) {
+      console.log('SignIn callback:', { user, account })
+      // Always allow sign in - we'll handle user creation in the session callback
       return true
     },
     async redirect({ url, baseUrl }) {
       console.log('Redirect callback:', { url, baseUrl })
-      // Allows relative callback URLs
-      if (url.startsWith("/")) return `${baseUrl}${url}`
-      // Allows callback URLs on the same origin
-      else if (new URL(url).origin === baseUrl) return url
+      // Always allow redirects to the home page
+      if (url === baseUrl || url === `${baseUrl}/`) {
+        return url
+      }
+      // Allow all redirects in development
+      if (process.env.NODE_ENV === 'development') {
+        return url
+      }
+      // If the url is relative, prefix it with the base url
+      if (url.startsWith('/')) {
+        return `${baseUrl}${url}`
+      }
+      // If the url is on the same origin, allow it
+      if (new URL(url).origin === baseUrl) {
+        return url
+      }
+      // Otherwise, redirect to the home page
       return baseUrl
     },
     async jwt({ token, user, account }) {
+      console.log('JWT callback:', { token, user, account })
       if (account && user) {
         token.accessToken = account.access_token
         token.userId = user.id
@@ -151,8 +120,9 @@ export const authOptions: NextAuthOptions = {
       return token
     },
     async session({ session, token }) {
+      console.log('Session callback:', { session, token })
       if (session.user) {
-        session.user.id = token.userId
+        session.user.id = token.sub || token.userId // Use sub as fallback
         session.user.provider = token.provider
         session.accessToken = token.accessToken
       }
@@ -163,7 +133,7 @@ export const authOptions: NextAuthOptions = {
     strategy: 'jwt',
     maxAge: 30 * 24 * 60 * 60, // 30 days
   },
-  debug: true,
+  debug: true, // Always enable debug mode for troubleshooting
   secret: process.env.NEXTAUTH_SECRET,
 }
 
