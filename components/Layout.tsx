@@ -1,106 +1,95 @@
 import React from 'react'
-import { useTheme } from '../contexts/ThemeContext'
 import { useSession, signOut } from 'next-auth/react'
 import Link from 'next/link'
-import { FaSun, FaMoon } from 'react-icons/fa'
+import Head from 'next/head'
+import { FaHome, FaDumbbell, FaChartLine, FaUser } from 'react-icons/fa'
+import Logo from './Logo'
 
 interface LayoutProps {
   children: React.ReactNode
 }
 
 export default function Layout({ children }: LayoutProps) {
-  const { theme, setTheme } = useTheme()
   const { data: session } = useSession()
 
-  const handleSignOut = () => {
-    signOut({ callbackUrl: '/auth/signin' })
-  }
-
-  const toggleTheme = () => {
-    setTheme(theme === 'dark' ? 'light' : 'dark')
-  }
-
-  const linkStyles = `text-sm font-medium transition-all duration-200 hover:ring-2 hover:ring-blue-500 hover:ring-offset-2 rounded-md px-3 py-2 ${
-    theme === 'dark'
-    ? 'text-gray-300 hover:text-white ring-offset-gray-900'
-    : 'text-gray-700 hover:text-gray-900 ring-offset-white'
-  }`
-
-  const primaryButtonStyles = `transition-all duration-200 hover:ring-2 hover:ring-blue-500 hover:ring-offset-2 rounded-md px-4 py-2 ${
-    theme === 'dark'
-    ? 'bg-blue-500 hover:bg-blue-600 ring-offset-gray-900'
-    : 'bg-blue-600 hover:bg-blue-700 ring-offset-white'
-  } text-white`
-
   return (
-    <div className={`min-h-screen ${theme === 'dark' ? 'bg-dark text-dark' : 'bg-light text-light'}`}>
-      <nav className={`${theme === 'dark' ? 'bg-gray-900' : 'bg-white'} shadow-sm`}>
+    <div className="min-h-screen bg-[#0F172A]">
+      <Head>
+        <title>4WORD P&W</title>
+        <meta name="description" content="Transform your fitness journey with 4WORD Performance & Wellness" />
+      </Head>
+      <nav className="bg-gray-800/50 backdrop-blur-sm shadow-sm">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between h-16">
-            <div className="flex items-center">
-              <Link href="/" className="flex items-center">
-                <span className={`text-xl font-bold ${theme === 'dark' ? 'text-white' : 'text-gray-900'}`}>
-                  FitFlow
-                </span>
-              </Link>
-            </div>
+            {/* Left side navigation */}
+            {session && (
+              <div className="flex items-center sm:space-x-8">
+                <Link
+                  href="/"
+                  className="inline-flex items-center px-1 pt-1 border-b-2 border-transparent text-sm font-medium text-gray-300 hover:border-gray-300 hover:text-gray-100"
+                >
+                  <FaHome className="mr-2" />
+                  Home
+                </Link>
+                <Link
+                  href="/goals"
+                  className="inline-flex items-center px-1 pt-1 border-b-2 border-transparent text-sm font-medium text-gray-300 hover:border-gray-300 hover:text-gray-100"
+                >
+                  <FaChartLine className="mr-2" />
+                  Goals
+                </Link>
+                <Link
+                  href="/workouts"
+                  className="inline-flex items-center px-1 pt-1 border-b-2 border-transparent text-sm font-medium text-gray-300 hover:border-gray-300 hover:text-gray-100"
+                >
+                  <FaDumbbell className="mr-2" />
+                  Workouts
+                </Link>
+                <Link
+                  href="/profile"
+                  className="inline-flex items-center px-1 pt-1 border-b-2 border-transparent text-sm font-medium text-gray-300 hover:border-gray-300 hover:text-gray-100"
+                >
+                  <FaUser className="mr-2" />
+                  Profile
+                </Link>
+              </div>
+            )}
 
-            <div className="flex items-center space-x-4">
-              <button
-                onClick={toggleTheme}
-                className={`p-2 rounded-lg transition-all duration-200 hover:ring-2 hover:ring-blue-500 hover:ring-offset-2 ${
-                  theme === 'dark'
-                  ? 'text-gray-300 hover:text-white ring-offset-gray-900'
-                  : 'text-gray-700 hover:text-gray-900 ring-offset-white'
-                }`}
-                aria-label="Toggle theme"
-              >
-                {theme === 'dark' ? (
-                  <FaSun className="w-5 h-5" />
-                ) : (
-                  <FaMoon className="w-5 h-5" />
-                )}
-              </button>
-
+            {/* Right side with logo and auth buttons */}
+            <div className="flex items-center space-x-8">
               {session ? (
-                <>
-                  <Link
-                    href="/dashboard"
-                    className={linkStyles}
-                  >
-                    Dashboard
-                  </Link>
-                  <button
-                    onClick={handleSignOut}
-                    className={linkStyles}
-                  >
-                    Sign Out
-                  </button>
-                </>
+                <button
+                  onClick={() => signOut()}
+                  className="px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700"
+                >
+                  Sign out
+                </button>
               ) : (
-                <>
+                <div className="space-x-6">
                   <Link
                     href="/auth/signin"
-                    className={linkStyles}
+                    className="text-gray-300 hover:text-gray-100"
                   >
-                    Sign In
+                    Sign in
                   </Link>
                   <Link
                     href="/auth/signup"
-                    className={primaryButtonStyles}
+                    className="px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700"
                   >
-                    Sign Up
+                    Sign up
                   </Link>
-                </>
+                </div>
               )}
+              <div className="flex-shrink-0 flex items-center">
+                <Logo 
+                  className="transform transition-all duration-200 hover:drop-shadow-[0_0_15px_rgba(59,130,246,0.5)]" 
+                />
+              </div>
             </div>
           </div>
         </div>
       </nav>
-
-      <main className={`flex-1 ${theme === 'dark' ? 'text-white' : 'text-gray-900'}`}>
-        {children}
-      </main>
+      <main>{children}</main>
     </div>
   )
 } 

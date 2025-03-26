@@ -1,7 +1,7 @@
 import { useEffect } from 'react'
 import { signOut } from 'next-auth/react'
 import Layout from '../../components/Layout'
-import { useTheme } from '../../contexts/ThemeContext'
+import { useTheme } from 'next-themes'
 
 export default function SignOut() {
   const { theme } = useTheme()
