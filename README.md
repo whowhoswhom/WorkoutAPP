@@ -57,6 +57,7 @@ src/
 - Tailwind CSS
 - Supabase
 - Google OAuth
+- Vercel (Web Hosting)
 
 ## Contributing
 
