@@ -1,3 +1,5 @@
+import { logError } from './logger'
+
 const DEEPSEEK_API_KEY = process.env.DEEPSEEK_API_KEY!
 const DEEPSEEK_API_URL = process.env.DEEPSEEK_API_URL!
 
@@ -47,7 +49,7 @@ export async function generateWorkoutPlan(prompt: string): Promise<string> {
     const data: DeepSeekResponse = await response.json()
     return data.choices[0].message.content
   } catch (error) {
-    console.error('Error generating workout plan:', error)
+    logError('deepseek.ts', 'generateWorkoutPlan', error)
     throw error
   }
 }
@@ -81,7 +83,7 @@ export async function chatWithAI(messages: DeepSeekMessage[]): Promise<string> {
     const data: DeepSeekResponse = await response.json()
     return data.choices[0].message.content
   } catch (error) {
-    console.error('Error chatting with AI:', error)
+    logError('deepseek.ts', 'chatWithAI', error)
     throw error
   }
-} 
+}
