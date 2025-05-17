@@ -8,8 +8,13 @@ const config: Config = {
   ],
   theme: {
     extend: {
+      fontFamily: {
+        sans: ['Poppins', 'sans-serif'],
+        display: ['SF Pro Display', 'sans-serif'],
+      },
       colors: {
         primary: {
+          DEFAULT: '#2563EB',
           50: '#f0f9ff',
           100: '#e0f2fe',
           200: '#bae6fd',
@@ -21,7 +26,9 @@ const config: Config = {
           800: '#075985',
           900: '#0c4a6e',
         },
+        secondary: '#4F46E5',
         neutral: {
+          DEFAULT: '#1F2937',
           50: '#fafafa',
           100: '#f5f5f5',
           200: '#e5e5e5',
@@ -33,6 +40,10 @@ const config: Config = {
           800: '#262626',
           900: '#171717',
         },
+        accent: '#F59E0B',
+      },
+      boxShadow: {
+        soft: '0 2px 4px rgba(0, 0, 0, 0.05)',
       },
     },
   },
