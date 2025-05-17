@@ -5,7 +5,7 @@ A Next.js application for AI-powered guidance.
 ## Features
 
 - User authentication with Supabase
-- Google OAuth integration
+- Google OAuth integration via Supabase
 - Protected routes
 - Responsive design with Tailwind CSS
 - TypeScript support
@@ -14,23 +14,22 @@ A Next.js application for AI-powered guidance.
 ## Getting Started
 
 1. Clone the repository
-2. Ensure Node.js 18 or higher is installed
-3. Install dependencies:
+2. Install dependencies:
    ```bash
    npm install
    ```
-4. Create a `.env.local` file with the following variables:
+3. Create a `.env.local` file with the following variables:
    ```
    NEXT_PUBLIC_SUPABASE_URL=your_supabase_url
    NEXT_PUBLIC_SUPABASE_ANON_KEY=your_supabase_anon_key
-   GOOGLE_CLIENT_ID=your_google_client_id
-   GOOGLE_CLIENT_SECRET=your_google_client_secret
    ```
-5. Run the development server:
+   Configure the Google OAuth provider in your Supabase project settings and
+   set the redirect URL to `http://localhost:3000/auth/callback`.
+4. Run the development server:
    ```bash
    npm run dev
    ```
-6. Open [http://localhost:3000](http://localhost:3000) in your browser.
+5. Open [http://localhost:3000](http://localhost:3000) in your browser.
 
 ## Project Structure
 
@@ -57,12 +56,7 @@ src/
 - TypeScript
 - Tailwind CSS
 - Supabase
-- Google OAuth
-
-## Tailwind Configuration
-
-Tailwind CSS settings are defined in `tailwind.config.ts`. Update this file to
-customize themes, colors, or fonts.
+- Google OAuth provider (configured in Supabase dashboard)
 
 ## Contributing
 
