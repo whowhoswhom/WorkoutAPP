@@ -1,5 +1,6 @@
 import { useState, useRef, useEffect } from 'react'
 import { DeepSeekMessage } from '@/lib/deepseek'
+import { logError } from '@/lib/logger'
 
 export default function ChatPanel() {
   const [isOpen, setIsOpen] = useState(false)
@@ -52,7 +53,7 @@ export default function ChatPanel() {
 
       setMessages(prev => [...prev, aiMessage])
     } catch (error) {
-      console.error('Chat error:', error)
+      logError('components/ChatPanel.tsx', 'handleSubmit', error)
       setMessages(prev => [...prev, {
         role: 'assistant',
         content: 'Sorry, I encountered an error. Please try again.'

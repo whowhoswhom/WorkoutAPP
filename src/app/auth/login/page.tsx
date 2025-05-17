@@ -4,6 +4,7 @@ import { useState } from 'react'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import { supabase } from '@/lib/supabase'
+import { logError } from '@/lib/logger'
 
 export default function LoginPage() {
   const [email, setEmail] = useState('')
@@ -28,6 +29,7 @@ export default function LoginPage() {
       router.push('/dashboard')
     } catch (error: any) {
       setError(error.message)
+      logError('auth/login/page.tsx', 'handleSubmit', error)
     } finally {
       setLoading(false)
     }
@@ -48,6 +50,7 @@ export default function LoginPage() {
       if (error) throw error
     } catch (error: any) {
       setError(error.message)
+      logError('auth/login/page.tsx', 'handleGoogleLogin', error)
     }
   }
 

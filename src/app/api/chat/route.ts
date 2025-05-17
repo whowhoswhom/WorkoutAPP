@@ -1,5 +1,6 @@
 import { NextResponse } from 'next/server'
 import { chatWithAI, DeepSeekMessage } from '@/lib/deepseek'
+import { logError } from '@/lib/logger'
 
 export async function POST(request: Request) {
   try {
@@ -15,10 +16,10 @@ export async function POST(request: Request) {
     const response = await chatWithAI(messages)
     return NextResponse.json({ response })
   } catch (error) {
-    console.error('Chat API error:', error)
+    logError('api/chat/route.ts', 'POST', error)
     return NextResponse.json(
       { error: 'Failed to process chat request' },
       { status: 500 }
     )
   }
-} 
+}
