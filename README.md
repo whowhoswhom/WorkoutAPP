@@ -14,22 +14,23 @@ A Next.js application for AI-powered guidance.
 ## Getting Started
 
 1. Clone the repository
-2. Install dependencies:
+2. Ensure Node.js 18 or higher is installed
+3. Install dependencies:
    ```bash
    npm install
    ```
-3. Create a `.env.local` file with the following variables:
+4. Create a `.env.local` file with the following variables:
    ```
    NEXT_PUBLIC_SUPABASE_URL=your_supabase_url
    NEXT_PUBLIC_SUPABASE_ANON_KEY=your_supabase_anon_key
    GOOGLE_CLIENT_ID=your_google_client_id
    GOOGLE_CLIENT_SECRET=your_google_client_secret
    ```
-4. Run the development server:
+5. Run the development server:
    ```bash
    npm run dev
    ```
-5. Open [http://localhost:3000](http://localhost:3000) in your browser.
+6. Open [http://localhost:3000](http://localhost:3000) in your browser.
 
 ## Project Structure
 
