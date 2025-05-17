@@ -15,5 +15,5 @@
 
 ## Handling Errors
 - [ ] Wrap async operations in try/catch.
-- [ ] Call `logError(file, functionName, error)` to record details in `logs/debug.md`.
+- [ ] Call `logError(file, functionName, error)` to output errors to the console or a logging service.
 - [ ] Surface user-friendly messages in the UI.
