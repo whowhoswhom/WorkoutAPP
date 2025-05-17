@@ -8,6 +8,7 @@ A Next.js application for AI-powered guidance.
 - Google OAuth integration via Supabase
 - Protected routes
 - Responsive design with Tailwind CSS
+- Tailwind configuration written in TypeScript
 - TypeScript support
 - Error handling and loading states
 
