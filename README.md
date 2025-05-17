@@ -58,6 +58,11 @@ src/
 - Supabase
 - Google OAuth
 
+## Tailwind Configuration
+
+Tailwind CSS settings are defined in `tailwind.config.ts`. Update this file to
+customize themes, colors, or fonts.
+
 ## Contributing
 
 1. Fork the repository

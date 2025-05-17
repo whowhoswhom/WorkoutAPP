@@ -8,6 +8,10 @@ const config: Config = {
   ],
   theme: {
     extend: {
+      fontFamily: {
+        sans: ['Poppins', 'sans-serif'],
+        display: ['SF Pro Display', 'sans-serif'],
+      },
       colors: {
         primary: {
           50: '#f0f9ff',
@@ -33,6 +37,11 @@ const config: Config = {
           800: '#262626',
           900: '#171717',
         },
+        secondary: '#4F46E5',
+        accent: '#F59E0B',
+      },
+      boxShadow: {
+        soft: '0 2px 4px rgba(0, 0, 0, 0.05)',
       },
     },
   },
