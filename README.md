@@ -14,23 +14,21 @@ A Next.js application for AI-powered guidance.
 
 ## Getting Started
 
-1. Clone the repository
-2. Install dependencies:
+1. Ensure you have **Node.js 18 or higher** installed.
+2. Clone the repository
+3. Install dependencies:
    ```bash
    npm install
    ```
-3. Create a `.env.local` file with the following variables:
+4. Create a `.env.local` file with the following variables:
    ```
    NEXT_PUBLIC_SUPABASE_URL=your_supabase_url
    NEXT_PUBLIC_SUPABASE_ANON_KEY=your_supabase_anon_key
    ```
-   Configure the Google OAuth provider in your Supabase project settings and
-   set the redirect URL to `http://localhost:3000/auth/callback`.
-4. Run the development server:
    ```bash
    npm run dev
    ```
-5. Open [http://localhost:3000](http://localhost:3000) in your browser.
+6. Open [http://localhost:3000](http://localhost:3000) in your browser.
 
 ## Project Structure
 
