@@ -1,3 +1,4 @@
+CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
 -- Create profiles table
 CREATE TABLE profiles (
   id UUID REFERENCES auth.users ON DELETE CASCADE,
