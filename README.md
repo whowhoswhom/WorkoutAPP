@@ -27,6 +27,9 @@ A Next.js application for AI-powered guidance.
    DEEPSEEK_API_URL=https://api.deepseek.com
    DEEPSEEK_API_KEY=your_deepseek_api_key
    ```
+5. In the Supabase dashboard, add both callback URLs to **Authentication → URL Configuration → Additional Redirect URLs**:
+   - `http://localhost:3000/auth/callback` (development)
+   - `https://fitflow.cloud/auth/callback` (production)
    ```bash
    npm run dev
    ```
