@@ -5,7 +5,6 @@
 
 # testing
 /coverage
-@@ -8,26 +8,28 @@
 
 # next.js
 /.next/
@@ -31,6 +30,6 @@ yarn-error.log*
 
 # typescript
 *.tsbuildinfo
-next-env.d.ts 
+next-env.d.ts
 # logs
 logs/
