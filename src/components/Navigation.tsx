@@ -5,6 +5,7 @@ import { usePathname } from 'next/navigation'
 import { createClientComponentClient } from '@supabase/auth-helpers-nextjs'
 import { useEffect, useState } from 'react'
 import SignOutButton from './SignOutButton'
+import ThemeToggle from './ThemeToggle'
 
 export default function Navigation() {
   const pathname = usePathname()
@@ -52,12 +53,13 @@ export default function Navigation() {
                 </Link>
                 <Link
                   href="/auth/signup"
-                  className="px-4 py-2 rounded-md bg-blue-600 text-white hover:bg-blue-500"
+                  className="btn btn-primary"
                 >
                   Sign up
                 </Link>
               </>
             )}
+            <ThemeToggle />
           </div>
         </div>
       </div>

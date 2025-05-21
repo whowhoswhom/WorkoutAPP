@@ -26,12 +26,21 @@ A Next.js application for AI-powered guidance.
    NEXT_PUBLIC_SUPABASE_ANON_KEY=your_supabase_anon_key
    DEEPSEEK_API_URL=https://api.deepseek.com
    DEEPSEEK_API_KEY=your_deepseek_api_key
-   ```
-5. Start the development server:
    ```bash
    npm run dev
    ```
-6. Open [http://localhost:3000](http://localhost:3000) in your browser.
+5. Open [http://localhost:3000](http://localhost:3000) in your browser.
+
+## Setup
+
+Configure Supabase OAuth redirect URLs so login works locally and in production.
+
+1. In the Supabase dashboard, open **Authentication** → **URL Configuration**.
+2. Under **Additional Redirect URLs**, whitelist the following URLs:
+   - `http://localhost:3000/auth/callback`
+   - `https://fitflow.cloud/auth/callback`
+
+This allows Google OAuth to redirect users back to the correct environment.
 
 ## Setup
 
@@ -77,4 +86,4 @@ src/
 2. Create your feature branch
 3. Commit your changes
 4. Push to the branch
-5. Create a new Pull Request 
+5. Create a new Pull Request.

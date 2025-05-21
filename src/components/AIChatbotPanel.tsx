@@ -8,7 +8,7 @@ export default function AIChatbotPanel() {
         placeholder="Ask me anything..."
         className="mt-4 w-full px-3 py-2 border border-gray-300 rounded-md"
       />
-      <button className="mt-2 px-4 py-2 bg-blue-600 text-white rounded-md">
+      <button className="mt-2 btn btn-primary">
         Send
       </button>
       {/* Add AI chatbot logic here */}
