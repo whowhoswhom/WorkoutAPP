@@ -53,7 +53,7 @@ export default function Navigation() {
                 </Link>
                 <Link
                   href="/auth/signup"
-                  className="px-4 py-2 rounded-md bg-blue-600 text-white hover:bg-blue-500"
+                  className="btn btn-primary"
                 >
                   Sign up
                 </Link>
