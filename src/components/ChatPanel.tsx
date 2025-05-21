@@ -68,7 +68,7 @@ export default function ChatPanel() {
       {!isOpen ? (
         <button
           onClick={() => setIsOpen(true)}
-          className="bg-blue-600 text-white rounded-full p-4 shadow-lg hover:bg-blue-700 transition-colors"
+          className="btn btn-primary rounded-full p-4 shadow-lg"
           aria-label="Open chat"
         >
           <svg
@@ -155,10 +155,10 @@ export default function ChatPanel() {
               <button
                 type="submit"
                 disabled={isLoading || !input.trim()}
-                className={`bg-blue-600 text-white rounded-lg px-4 py-2 transition-colors ${
+                className={`btn btn-primary rounded-lg ${
                   isLoading || !input.trim()
                     ? 'opacity-50 cursor-not-allowed'
-                    : 'hover:bg-blue-700'
+                    : ''
                 }`}
               >
                 Send
